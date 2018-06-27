@@ -1,0 +1,4 @@
+{
+  "BASE_URL": "https://api.topcoder.com/v3/direct/projects",
+  "LOG_LEVEL": "debug"
+}
