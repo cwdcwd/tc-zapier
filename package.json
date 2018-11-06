@@ -1,5 +1,5 @@
 {
-  "name": "zapier-platform-example-app-resource",
+  "name": "Topcoder Zapier Utility",
   "version": "1.0.0",
   "description": "An example app for the Zapier platform.",
   "repository": "zapier/zapier-platform-example-app-resource",
@@ -16,8 +16,9 @@
   },
   "dependencies": {
     "config": "^1.30.0",
-    "zapier-platform-core": "7.0.0",
-    "tc-core-library-js": "git://github.com/appirio-tech/tc-core-library-js.git#v2.3"
+    "lodash": "^4.17.10",
+    "tc-core-library-js": "git://github.com/appirio-tech/tc-core-library-js.git#v2.3",
+    "zapier-platform-core": "7.0.0"
   },
   "devDependencies": {
     "mocha": "^5.2.0",

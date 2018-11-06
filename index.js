@@ -1,13 +1,25 @@
 
-const tc-core-library-js = require('tc-core-library-js');
+const config = require('config');
+const tcCoreLib = require('tc-core-library-js');
+const zapier = require('zapier-platform-core');
 const ProjectResource = require('./resources/project');
 
-const addAuthHeader = (request, z, bundle) => {
-  // Hard-coded authentication just for demo
-  request.headers['X-API-Key'] = 'secret';
-  return request;
+zapier.tools.env.inject();
 
-  tc-core-library-js
+const addAuthHeader = (request, z, bundle) => {
+  const clientId = config.CLIENT_ID;
+  const clientSecret = config.CLIENT_SECRET;
+console.log(config);
+  const m2m = tcCoreLib.auth.m2m({ AUTH0_URL: config.AUTH0_URL, AUTH0_AUDIENCE: config.AUTH0_AUDIENCE})
+  return m2m.getMachineToken(clientId, clientSecret).then( (JWT) => {
+    request.headers['authorization'] = `Bearer ${JWT}`;
+    //console.log(request);
+    return request;
+  }).catch((err) => {
+    console.log(err);
+    return request;
+  });
+
 };
 
 // Now we can roll up all our behaviors in an App.
@@ -24,14 +36,17 @@ const App = {
   // If you want your resource to show up, you better include it here!
   resources: {
     [ProjectResource.key]: ProjectResource,
-    [Projects.key]: Projects
   },
 
   // If you want your trigger to show up, you better include it here!
-  triggers: {},
+  triggers: {
+
+  },
 
   // If you want your searches to show up, you better include it here!
-  searches: {},
+  searches: {
+//    [ProjectResource.key]: ProjectResource.search,
+  },
 
   // If you want your creates to show up, you better include it here!
   creates: {}

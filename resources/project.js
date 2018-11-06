@@ -1,7 +1,7 @@
-
+const _ = require('lodash');
 const config = require('config');
 
-const baseURL = config.BASE_URL;
+const baseURL = config.BASE_URL_CONNECT_PROJECTS;
 
 // get a single project
 const getProject = (z, bundle) => {
@@ -22,7 +22,10 @@ const listProjects = (z) => {
     }
   });
   return responsePromise
-    .then(response => z.JSON.parse(response.content));
+    .then((response) => {
+      //console.log(`\n\ncame back with: ${z.JSON.parse(response.content).result.content}\n\n`);
+      return _.get(z.JSON.parse(response.content), 'result.content', []);
+    });
 };
 
 // find a particular project by name
@@ -108,12 +111,13 @@ module.exports = {
   },
 */
   sample: {
-    id: 1,
-    name: 'Test'
+    id: 6231,
+    name: 'CWD Test App 01'
   },
 
   outputFields: [
     {key: 'id', label: 'ID'},
-    {key: 'name', label: 'Name'}
+    {key: 'name', label: 'Name'},
+    {key: 'billingAccountIds', label: 'Billing Account Ids'}
   ]
 };

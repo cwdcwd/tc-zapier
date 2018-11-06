@@ -8,11 +8,21 @@ const App = require('../../index');
 const appTester = zapier.createAppTester(App);
 zapier.tools.env.inject();
 
-describe('My App', () => {
+describe('Topcoder Projects', () => {
   it('should run resources.project', done => {
-    const bundle = { inputData: {} };
+    let bundle = { inputData: {} };
 
     appTester(App.resources.project.list.operation.perform, bundle)
+      .then(results => {
+        should.exist(results);
+        done();
+      })
+      .catch(done);
+  });
+
+  it('should get a resources.project', done => {
+    bundle = { inputData: { id: App.resources.project.sample.id} };
+    appTester(App.resources.project.get.operation.perform, bundle)
       .then(results => {
         should.exist(results);
         done();
